@@ -1,0 +1,78 @@
+{
+  "manifestVersion": 1,
+  "id": "dtl-vso-build-release-tasks",
+  "name": "Azure DevTest Labs",
+  "version": "0.0.2",
+  "publisher": "AzureDevTestLab",
+  "public": false,
+  "branding": {
+    "color": "rgb(93, 47, 145)",
+    "theme": "dark"
+  },
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "description": "@Todo. A few sentences describing the extension. Limited to 200 characters.",
+  "categories": [
+    "Collaborate"
+  ],
+  "tags": [
+    "DTL",
+    "Azure",
+    "Lab",
+    "Labs",
+    "DevTest",
+    "DevTest Lab",
+    "DevTest Labs",
+    "Azure DevTest Lab",
+    "Azure DevTest Labs"
+  ],
+  "icons": {
+    "default": "extension-icon.png"
+  },
+  "files": [
+    {
+      "path": "DTLCreateVM"
+    },
+    {
+      "path": "DTLCreateVMTemplate"
+    },
+    {
+      "path": "DTLDeleteVM"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "dtl-vso-task-create-vm",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "DTLCreateVM"
+      }
+    },
+    {
+      "id": "dtl-vso-task-create-vmtemplate",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "DTLCreateVMTemplate"
+      }
+    },
+    {
+      "id": "dtl-vso-task-delete-vm",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "DTLDeleteVM"
+      }
+    }
+  ]
+}

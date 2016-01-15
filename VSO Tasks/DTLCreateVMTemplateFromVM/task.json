@@ -1,0 +1,80 @@
+﻿{
+  "id": "8B2135E2-D548-4345-8440-3B2048B5A595",
+  "name": "DevTestLabCreateVMTemplate",
+  "friendlyName": "Azure DevTest Lab - Create VM Template",
+  "description": "Create a new VM template from an existing VM in an Azure DevTest Lab.",
+  "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=613749)",
+  "category": "Deploy",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "author": "Microsoft Corporation",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 51
+  },
+  "demands": [
+    "azureps"
+  ],
+  "minimumAgentVersion": "1.90.0",
+  "groups": [
+    {
+      "name": "output",
+      "displayName": "Output Variables",
+      "isExpanded": true
+    }
+  ],
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:Azure",
+      "label": "Azure Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The Azure subscription to use for authentication."
+    },
+    {
+      "name": "VMId",
+      "type": "string",
+      "label": "VM Id",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The resource ID of an existing VM based on which the new VM Template will be created."
+    },
+    {
+      "name": "VMTemplateName",
+      "type": "string",
+      "label": "VM Template Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the new VM Template to create."
+    },
+    {
+      "name": "VMTemplateDescription",
+      "type": "string",
+      "label": "VM Template Description",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The details about the new VM Template being created."
+    },
+    {
+      "name": "OutputVariableVMTemplateId",
+      "type": "string",
+      "label": "VM Template Id",
+      "defaultValue": "",
+      "required": false,
+      "groupName": "output",
+      "helpMarkDown": "A variable to capture the newly created VM Template's resource ID. The variable can be used as $(variableName) to refer to the VM Template in subsequent tasks."
+    }
+  ],
+  "instanceNameFormat": "Create a new VM template in an Azure DevTest Lab",
+  "execution": {
+    "AzurePowerShell": {
+      "target": "$(currentDirectory)\\CreateDtlVMTemplate.ps1",
+      "argumentFormat": "",
+      "workingDirectory": "$(currentDirectory)"
+    }
+  }
+}

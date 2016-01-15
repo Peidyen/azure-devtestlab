@@ -1,0 +1,105 @@
+﻿{
+  "id": "a177ae80-93bf-11e5-890d-552a368b2882",
+  "name": "DevTestLabCreateVM",
+  "friendlyName": "Azure DevTest Lab - Create VM",
+  "description": "Create a new VM in an Azure DevTest Lab",
+  "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=613749)",
+  "category": "Deploy",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "author": "Microsoft Corporation",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 56
+  },
+  "demands": [
+    "azureps"
+  ],
+  "minimumAgentVersion": "1.90.0",
+  "groups": [
+    {
+      "name": "output",
+      "displayName": "Output Variables",
+      "isExpanded": true
+    }
+  ],
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:Azure:UsernamePassword,ServicePrincipal",
+      "label": "Azure Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The Azure subscription to use for authentication."
+    },
+    {
+      "name": "LabName",
+      "type": "pickList",
+      "label": "Lab Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of an existing lab in which the new VM will be created."
+    },
+    {
+      "name": "VMTemplateName",
+      "type": "string",
+      "label": "VM Template Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of an existing VM template which will be used to create the new VM."
+    },
+    {
+      "name": "VMName",
+      "type": "string",
+      "label": "VM Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of VM to be created."
+    },
+    {
+      "name": "VMSize",
+      "type": "string",
+      "label": "VM Size",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The size of VM to be created ('Standard_A0,' 'Standard_D1_v2', 'Standard_D2' etc)."
+    },
+    {
+      "name": "OutputVariableId",
+      "type": "string",
+      "label": "VM Id",
+      "required": true,
+      "defaultValue": "",
+      "groupName": "output",
+      "helpMarkDown": "A variable to capture the newly created VM's Id. The variable can be referred as $(variableName) in subsequent tasks."
+    },
+    {
+      "name": "OutputVariableFQDN",
+      "type": "string",
+      "label": "Fully Qualified Domain Name",
+      "required": false,
+      "defaultValue": "",
+      "groupName": "output",
+      "helpMarkDown": "A variable to capture the newly created VM's FQDN (fully qualified domain name). The variable can be referred as $(variableName) in subsequent tasks."
+    }
+  ],
+  "sourceDefinitions": [
+    {
+        "target": "LabName",
+        "endpoint": "https://management.azure.com/subscriptions/fe869d2a-4f32-41a5-a22f-53ea1a952ceb/providers/Microsoft.DevTestLab/labs?api-version=2015-05-21-preview",
+        "selector": "jsonpath:$.value[*].name",
+        "authKey": "$(ConnectedServiceName)"
+    }
+  ],
+  "instanceNameFormat": "Create a new VM in an Azure DevTest Lab",
+  "execution": {
+    "AzurePowerShell": {
+      "target": "$(currentDirectory)\\CreateDtlVirtualMachine.ps1",
+      "argumentFormat": "",
+      "workingDirectory": "$(currentDirectory)"
+    }
+  }
+}

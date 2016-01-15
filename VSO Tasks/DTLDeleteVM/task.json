@@ -1,0 +1,48 @@
+﻿{
+  "id": "5E34D27F-5D5B-4DC2-98FA-FB904B78947C",
+  "name": "DevTestLabDeleteVM",
+  "friendlyName": "Azure DevTest Lab - Delete VM",
+  "description": "Delete an existing VM from an Azure DevTest Lab",
+  "helpMarkDown": "[More Information](http://go.microsoft.com/fwlink/?LinkID=613749)",
+  "category": "Deploy",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "author": "Microsoft Corporation",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 51
+  },
+  "demands": [
+    "azureps"
+  ],
+  "minimumAgentVersion": "1.90.0",
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:Azure",
+      "label": "Azure Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The Azure subscription to use for authentication."
+    },
+    {
+      "name": "VMId",
+      "type": "string",
+      "label": "VM Id",
+      "required": true,
+      "defaultValue": "",
+      "helpMarkDown": "The Id of VM to be deleted.<br>Note: The Create VM task returns the VM Id as an output variable."
+    }
+  ],
+  "instanceNameFormat": "Delete an existing VM from an Azure DevTest Lab",
+  "execution": {
+    "AzurePowerShell": {
+      "target": "$(currentDirectory)\\DeleteDtlVirtualMachine.ps1",
+      "argumentFormat": "",
+      "workingDirectory": "$(currentDirectory)"
+    }
+  }
+}
