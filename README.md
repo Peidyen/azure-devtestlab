@@ -4,11 +4,11 @@ This is a public, community-contributed repository that contains:
 
 - **Azure RM templates for Azure DevTest Labs:** @Todo ([more details](#azure-rm-templates))
 
-- **Powershell cmdlets for Azure DevTest Labs:** @Todo ([more details](#powershell-cmdlets))
+- **Powershell module for Azure DevTest Labs:** @Todo ([more details](#powershell-module))
 
-- **Visual Studio Online Build Tasks for Azure DevTest Labs:** @Todo ([more details](#vso-build-tasks))
+- **Visual Studio Online build tasks for Azure DevTest Labs:** @Todo ([more details](#vso-build-tasks))
 
-- **Jenkins Jobs for Azure DevTest Labs:** @Todo ([more details](#jenkins-jobs))
+- **Jenkins jobs for Azure DevTest Labs:** @Todo ([more details](#jenkins-jobs))
 
 ---
 ### Artifacts
@@ -31,8 +31,10 @@ Contributions to Azure RM templates should follow these high-level guidelines -
 More details can be found in our [documents section](@Todo)
 
 ---
-### PowerShell Cmdlets
-Contributions to PowerShell cmdlets should follow these high-level guidelines -
+### PowerShell Module
+The PowerShell module for Azure DevTest Labs can be installed from the [PowerShell gallery](https://www.powershellgallery.com/packages/AzureRM.DevTestLab/).
+
+Contributions to the PowerShell module should follow these high-level guidelines -
 - @Todo
 
 More details can be found in our [documents section](@Todo)
