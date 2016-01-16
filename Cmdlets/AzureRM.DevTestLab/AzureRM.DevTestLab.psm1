@@ -45,14 +45,14 @@ $StorageAccountResourceType = "microsoft.storage/storageAccounts"
 $RequiredApiVersion = "2015-05-21-preview"
 
 # Paths to Azure RM templates for the DevTest Lab provider.
-$ARMTemplate_CreateLab = "..\RM Templates\101-dtl-create-lab\azuredeploy.json"
-$ARMTemplate_CreateVM_BuiltinUsr = "..\RM Templates\101-dtl-create-vm-builtin-user\azuredeploy.json"
-$ARMTemplate_CreateVM_UsrPwd = "..\RM Templates\101-dtl-create-vm-username-pwd\azuredeploy.json"
-$ARMTemplate_CreateVM_UsrSSH = "..\RM Templates\101-dtl-create-vm-username-ssh\azuredeploy.json"
-$ARMTemplate_CreateLab_WithPolicies = "..\RM Templates\201-dtl-create-lab-with-policies\azuredeploy.json"
-$ARMTemplate_CreateVMTemplate_FromImage = "..\RM Templates\201-dtl-create-vmtemplate-from-azure-image\azuredeploy.json"
-$ARMTemplate_CreateVMTemplate_FromVhd = "..\RM Templates\201-dtl-create-vmtemplate-from-vhd\azuredeploy.json"
-$ARMTemplate_CreateVMTemplate_FromVM = "..\RM Templates\201-dtl-create-vmtemplate-from-vm\azuredeploy.json"
+$ARMTemplate_CreateLab = "..\..\RM Templates\101-dtl-create-lab-azuredeploy.json"
+$ARMTemplate_CreateVM_BuiltinUsr = "..\..\RM Templates\101-dtl-create-vm-builtin-user-azuredeploy.json"
+$ARMTemplate_CreateVM_UsrPwd = "..\..\RM Templates\101-dtl-create-vm-username-pwd-azuredeploy.json"
+$ARMTemplate_CreateVM_UsrSSH = "..\..\RM Templates\101-dtl-create-vm-username-ssh-azuredeploy.json"
+$ARMTemplate_CreateLab_WithPolicies = "..\..\RM Templates\201-dtl-create-lab-with-policies-azuredeploy.json"
+$ARMTemplate_CreateVMTemplate_FromImage = "..\..\RM Templates\201-dtl-create-vmtemplate-from-azure-image-azuredeploy.json"
+$ARMTemplate_CreateVMTemplate_FromVhd = "..\..\RM Templates\201-dtl-create-vmtemplate-from-vhd-azuredeploy.json"
+$ARMTemplate_CreateVMTemplate_FromVM = "..\..\RM Templates\201-dtl-create-vmtemplate-from-vm-azuredeploy.json"
 
 ##################################################################################################
 
@@ -284,7 +284,6 @@ function CopyVhdToLocalIfRemote_Private
         throw $("The specified local staging folder '" + $LocalStagingFolder + "' does not exist.")
     }
 
-    $vhdSourceFolder = Split-Path $VhdFilePathOrUri -Parent
     $vhdSourceFileName = Split-Path -Path $VhdFilePathOrUri -Leaf
     $vhdStagingPath = Join-Path -Path $LocalStagingFolder -ChildPath $vhdSourceFileName
 
@@ -828,10 +827,10 @@ function Get-AzureDtlVhd
             "ListByVhdUri"
             {
                 $output = Get-AzureStorageBlob -Container $uploadsContainer.Name -Context $labStorageAccountContext | Where-Object {
-                    ($_.ICloudBlob -ne $null) -and 
-                    ($_.ICloudBlob.Uri -ne $null) -and
-                    ($_.ICloudBlob.Uri.AbsoluteUri -ne $null) -and
-                    ($_.ICloudBlob.Uri.AbsoluteUri -eq $VhdAbsoluteUri) 
+                    ($null -ne $_.ICloudBlob) -and 
+                    ($null -ne $_.ICloudBlob.Uri) -and
+                    ($null -ne $_.ICloudBlob.Uri.AbsoluteUri) -and
+                    ($VhdAbsoluteUri -eq  $_.ICloudBlob.Uri.AbsoluteUri) 
                 }
             }
 
@@ -1568,7 +1567,9 @@ function Start-AzureDtlVhdCopy
         .INPUTS
         None. Currently you cannot pipe objects to this cmdlet (this will be fixed in a future version).  
     #>
-    [CmdletBinding(DefaultParameterSetName="AddFromStorageContainer")]
+    [CmdletBinding(
+        SupportsShouldProcess=$true,
+        DefaultParameterSetName="AddFromStorageContainer")]
     Param(
         [Parameter(Mandatory=$true, ParameterSetName="AddFromStorageContainer")] 
         [ValidateNotNullOrEmpty()]
